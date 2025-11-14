@@ -1,0 +1,49 @@
+<div class="wizard-container">
+
+  <div class="wizard-logo">
+    <img src="assets/logo-syncup.png" alt="SyncUp Logo">
+  </div>
+
+  <div class="wizard-header">
+    <button mat-button *ngIf="currentStep > 1" (click)="previousStep()">Atrás</button>
+    <a routerLink="/login" class="link-salir">Salir</a>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]="(currentStep / 4) * 100"></div>
+  </div>
+
+  <div class="wizard-content" [ngSwitch]="currentStep">
+    
+    <app-step-email 
+        *ngSwitchCase="1"
+        (formValidity)="updateValidity(1, $event)">
+    </app-step-email>
+    
+    <app-step-password *ngSwitchCase="2"></app-step-password>
+    
+    <app-step-profile *ngSwitchCase="3"></app-step-profile>
+    
+    <app-step-terms *ngSwitchCase="4"></app-step-terms>
+
+  </div>
+
+  <div class="wizard-actions">
+    <button 
+        mat-raised-button 
+        *ngIf="currentStep < 4" 
+        (click)="nextStep()"
+        [disabled]="!isCurrentStepValid()">
+      Siguiente
+    </button>
+    
+    <button 
+        mat-raised-button 
+        *ngIf="currentStep === 4" 
+        (click)="onSubmit()"
+        [disabled]="!isCurrentStepValid()">
+      Registrarse
+    </button>
+  </div>
+
+</div>

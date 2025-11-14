@@ -1,0 +1,33 @@
+<div class="step-container">
+  <h2 class="spotify-title">Regístrate para empezar a escuchar</h2>
+
+  <form [formGroup]="emailForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Dirección de correo electrónico</mat-label>
+      <input matInput type="email" formControlName="email">
+      
+      <mat-spinner *ngIf="emailControl.pending" matSuffix diameter="20"></mat-spinner>
+      
+      <mat-error *ngIf="emailControl.invalid && emailControl.touched">
+        <span *ngIf="emailControl.hasError('required')">
+          La dirección de correo electrónico es obligatoria.
+        </span>
+        <span *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+          Introduce una dirección de correo electrónico válida.
+        </span>
+        <span *ngIf="emailControl.hasError('usernameTaken')">
+          Este correo electrónico ya está registrado.
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <a href="#" class="link">Usar un número de teléfono en su lugar.</a>
+  </form>
+
+  <div class="separator"><span>o</span></div>
+
+  <button mat-stroked-button type="button" (click)="loginWithGoogle()">
+    <img src="assets/logo-google.png" alt="Google Logo" class="google-logo">
+    Registrarte con Google
+  </button>
+</div>

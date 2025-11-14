@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-step-profile',
   standalone: true,
   imports: [
     CommonModule,
@@ -15,21 +17,15 @@ import { RouterLink } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    RouterLink
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  templateUrl: './register.html',
-  styleUrl: './register.css'
+  templateUrl: './step-profile.html',
+  styleUrl: './step-profile.css'
 })
-export class Register {
+export class StepProfile {
   nombre = '';
-  username = '';
-  password = '';
-  confirmPassword = '';
-
-  onSubmit() {
-    console.log('Formulario de Registro Enviado');
-    console.log('Nombre:', this.nombre);
-    console.log('Usuario:', this.username);
-    console.log('Contraseña:', this.password);
-  }
+  fechaNacimiento: Date | null = null;
+  genero = '';
 }
