@@ -1,61 +1,94 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { StepEmail } from './step-email/step-email';
 import { StepPassword } from './step-password/step-password';
 import { StepProfile } from './step-profile/step-profile';
 import { StepTerms } from './step-terms/step-terms';
+import { Auth } from '../../services/auth';
 
 @Component({
-    selector: 'app-registro-wizard',
-    standalone: true,
-    imports: [
-        CommonModule,
-        RouterLink,
-        MatButtonModule,
-        StepEmail,
-        StepPassword,
-        StepProfile,
-        StepTerms
-    ],
-    templateUrl: './registro-wizard.html',
-    styleUrl: './registro-wizard.css'
+  selector: 'app-registro-wizard',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatButtonModule,
+    StepEmail,
+    StepPassword,
+    StepProfile,
+    StepTerms
+  ],
+  templateUrl: './registro-wizard.html',
+  styleUrl: './registro-wizard.css'
 })
 export class RegistroWizard {
 
-    currentStep: number = 1;
-    // Array para mantener el estado de validez de cada paso [email, password, profile, terms]
-    stepValidity: boolean[] = [false, false, false, false];
+  currentStep: number = 1;
+  stepValidity: boolean[] = [false, false, false, false];
 
-    constructor() { }
+  @ViewChild(StepEmail) stepEmail!: StepEmail;
+  @ViewChild(StepPassword) stepPassword!: StepPassword;
+  @ViewChild(StepProfile) stepProfile!: StepProfile;
+  @ViewChild(StepTerms) stepTerms!: StepTerms;
 
-    // Función llamada por el componente hijo para actualizar su estado de validez
-    updateValidity(stepIndex: number, isValid: boolean) {
-        this.stepValidity[stepIndex - 1] = isValid;
+  constructor(private auth: Auth, private router: Router) { }
+
+  updateValidity(stepIndex: number, isValid: boolean) {
+    this.stepValidity[stepIndex - 1] = isValid;
+  }
+
+  isCurrentStepValid(): boolean {
+    return this.stepValidity[this.currentStep - 1];
+  }
+
+  nextStep() {
+    if (this.currentStep < 4 && this.isCurrentStepValid()) {
+      this.currentStep++;
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  onSubmit() {
+    if (!this.stepValidity.every(valid => valid)) {
+      console.error('El formulario no es válido.');
+      return;
     }
 
-    // Verifica si el botón 'Siguiente' debe estar habilitado
-    isCurrentStepValid(): boolean {
-        // En el último paso, el botón 'Siguiente' cambia a 'Registrarse' (se maneja en onSubmit)
-        // Solo necesitamos que el paso 1, 2 o 3 sea válido para avanzar.
-        return this.stepValidity[this.currentStep - 1];
-    }
+    const emailData = this.stepEmail.emailForm.value;
+    const passwordData = this.stepPassword.passwordForm.value;
+    const profileData = this.stepProfile.profileForm.value;
+    
+    const registrationData = {
+      username: emailData.email,
+      password: passwordData.password,
+      nombre: profileData.nombre,
+      fechaNacimiento: this.formatDate(profileData.fechaNacimiento),
+      genero: profileData.genero
+    };
 
-    nextStep() {
-        if (this.currentStep < 4 && this.isCurrentStepValid()) {
-            this.currentStep++;
-        }
-    }
+    console.log('Enviando al backend:', registrationData);
 
-    previousStep() {
-        if (this.currentStep > 1) {
-            this.currentStep--;
-        }
-    }
+    this.auth.register(registrationData).subscribe({
+      next: (response: any) => {
+        console.log('Registro exitoso!', response);
+        this.router.navigate(['/login']);
+      },
+      error: (err: any) => {
+        console.error('Error en el registro:', err);
+      }
+    });
+  }
 
-    onSubmit() {
-        // La lógica de registro final se ejecutará aquí.
-        console.log('REGISTRO ENVIADO (Implementación pendiente)');
-    }
+  private formatDate(date: Date | null): string | null {
+    if (!date) return null;
+    const d = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    return d.toISOString().split('T')[0];
+  }
 }

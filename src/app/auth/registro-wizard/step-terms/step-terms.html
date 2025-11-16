@@ -1,20 +1,17 @@
-<div class="step-container">
+<div class="step-container" [formGroup]="termsForm">
   <h2>Términos y Condiciones</h2>
 
   <div class="terms-content">
-    <mat-checkbox name="marketing" [(ngModel)]="marketingConsent">
+    <mat-checkbox formControlName="marketingConsent">
       No quiero recibir mensajes de marketing de SyncUp.
     </mat-checkbox>
     
-    <mat-checkbox name="dataSharing" [(ngModel)]="dataSharingConsent">
+    <mat-checkbox formControlName="dataSharingConsent">
       Compartir mis datos de registro con los proveedores de contenidos de SyncUp para fines de marketing.
     </mat-checkbox>
 
     <div class="divider"></div>
 
-    <p class="terms-text">
-      Spotify es un servicio personalizado.
-    </p>
     <p class="terms-text">
       Al hacer clic en Registrarte, aceptas los <a href="#" class="link">Términos y condiciones de uso</a> de SyncUp.
     </p>
@@ -22,7 +19,7 @@
       Al hacer clic en Registrarte, aceptas la <a href="#" class="link">Política de privacidad</a> de SyncUp.
     </p>
 
-    <mat-checkbox name="terms" [(ngModel)]="termsAccepted" required>
+    <mat-checkbox formControlName="termsAccepted" required>
       Acepto los Términos y la Política de Privacidad.
     </mat-checkbox>
   </div>

@@ -26,8 +26,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class StepEmail implements OnInit {
 
-    emailForm: FormGroup;
-    @Output() formValidity = new EventEmitter<boolean>(); // Comunicador al padre
+    public emailForm: FormGroup;
+    @Output() formValidity = new EventEmitter<boolean>();
 
     constructor(private fb: FormBuilder, private auth: Auth) {
         this.emailForm = this.fb.group({});
@@ -42,9 +42,7 @@ export class StepEmail implements OnInit {
             ]
         });
 
-        // Suscripción a los cambios de estado del formulario
         this.emailForm.statusChanges.subscribe(status => {
-            // El formulario es válido si el estado es 'VALID' y no está 'PENDING'
             const isValid = status === 'VALID' && !this.emailControl.pending;
             this.formValidity.emit(isValid);
         });
@@ -60,12 +58,10 @@ export class StepEmail implements OnInit {
             if (!email) {
                 return of(null);
             }
-
-            // Retrasamos 500ms para no saturar el servidor con peticiones
+            
             return timer(500).pipe(
                 switchMap(() => authService.checkUsername(email)),
                 map(response => {
-                    // Si el backend responde 'exists: true', devolvemos un error
                     return response.exists ? { usernameTaken: true } : null;
                 }),
                 catchError(() => of(null))

@@ -13,18 +13,27 @@
     <div class="progress" [style.width.%]="(currentStep / 4) * 100"></div>
   </div>
 
-  <div class="wizard-content" [ngSwitch]="currentStep">
+  <div class="wizard-content">
     
     <app-step-email 
-        *ngSwitchCase="1"
+        [hidden]="currentStep !== 1"
         (formValidity)="updateValidity(1, $event)">
     </app-step-email>
     
-    <app-step-password *ngSwitchCase="2"></app-step-password>
+    <app-step-password 
+        [hidden]="currentStep !== 2"
+        (formValidity)="updateValidity(2, $event)">
+    </app-step-password>
     
-    <app-step-profile *ngSwitchCase="3"></app-step-profile>
+    <app-step-profile 
+        [hidden]="currentStep !== 3"
+        (formValidity)="updateValidity(3, $event)">
+    </app-step-profile>
     
-    <app-step-terms *ngSwitchCase="4"></app-step-terms>
+    <app-step-terms 
+        [hidden]="currentStep !== 4"
+        (formValidity)="updateValidity(4, $event)">
+    </app-step-terms>
 
   </div>
 
