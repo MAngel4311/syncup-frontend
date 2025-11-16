@@ -47,7 +47,7 @@ export class Login {
     }).subscribe({
       next: (response: any) => {
         console.log('Login exitoso:', response);
-        // TODO: Guardar token
+        this.authService.saveToken(response.token, response.nombre);
         this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {

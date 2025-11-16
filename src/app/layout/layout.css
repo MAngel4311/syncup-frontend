@@ -1,0 +1,121 @@
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-primary);
+}
+
+.sidenav {
+  width: 240px;
+  background-color: #000000;
+  border-right: 1px solid #282828;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  padding: 24px;
+  text-align: center;
+}
+
+.sidebar-logo {
+  max-width: 100px;
+  height: auto;
+  filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5));
+}
+
+.sidebar-title {
+  color: var(--color-light);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 10px 0 0 0;
+  background-image: linear-gradient(
+    to right, 
+    var(--color-primary), 
+    var(--color-secondary) 
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  line-height: 1.2;
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+.slogan-user {
+  color: #b3b3b3;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.mat-nav-list .mat-list-item {
+  color: #b3b3b3;
+  font-weight: 500;
+}
+
+.mat-nav-list .mat-list-item:hover {
+  color: #ffffff;
+  background-color: #1a1a1a;
+}
+
+.mat-nav-list .mat-list-item .mat-icon {
+  color: #b3b3b3;
+}
+
+.mat-nav-list .mat-list-item:hover .mat-icon {
+  color: #ffffff;
+}
+
+.mat-nav-list .active-link {
+  color: #ffffff;
+  background-color: #282828;
+}
+
+.mat-nav-list .active-link .mat-icon {
+  color: #ffffff;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 24px;
+}
+
+.sidebar-footer button {
+  width: 100%;
+  color: #b3b3b3;
+  background-color: transparent;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.sidebar-footer button:hover {
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.content-area {
+  background: radial-gradient(circle at 80% 50%, #003153 0%, #000000 60%);
+  padding-bottom: 90px;
+}
+
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background-color: #181818;
+  border-top: 1px solid #282828;
+  color: #ffffff;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.audio-player {
+  width: 50%;
+  max-width: 600px;
+}

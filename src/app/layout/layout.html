@@ -1,0 +1,42 @@
+<mat-sidenav-container class="dashboard-container">
+  
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="logo-container">
+      <img src="assets/logo-syncup.png" alt="SyncUp Logo" class="sidebar-logo">
+      <h1 class="sidebar-title">SyncUp</h1>
+      <p class="slogan-user" *ngIf="userName">{{ userName }}</p>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard/home" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Inicio</span>
+      </a>
+      <a mat-list-item routerLink="/dashboard/search" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>search</mat-icon>
+        <span matListItemTitle>Buscar</span>
+      </a>
+      <a mat-list-item routerLink="/dashboard/library" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>library_music</mat-icon>
+        <span matListItemTitle>Tu Biblioteca</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidebar-footer">
+      <button mat-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Cerrar Sesión
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content-area">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+  <mat-toolbar class="player-bar">
+    <span>Aquí irá el reproductor de música</span>
+    <audio controls class="audio-player"></audio>
+  </mat-toolbar>
+
+</mat-sidenav-container>

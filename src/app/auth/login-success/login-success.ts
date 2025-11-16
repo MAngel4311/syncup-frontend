@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login-success',
@@ -49,13 +49,20 @@ export class LoginSuccessComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private authService: Auth
   ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      console.log("Login con Google exitoso, redirigiendo a /dashboard");
+    const token = this.route.snapshot.queryParamMap.get('token');
+    const name = this.route.snapshot.queryParamMap.get('name');
+
+    if (token && name) {
+      const decodedName = decodeURIComponent(name);
+      this.authService.saveToken(token, decodedName);
       this.router.navigate(['/dashboard']);
-    }, 2500);
+    } else {
+      console.error("No se recibió el token o el nombre del backend.");
+      this.router.navigate(['/login']);
+    }
   }
 }
