@@ -2,21 +2,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem 0;
   background: radial-gradient(circle at 80% 50%, #003153 0%, #000000 60%);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  box-sizing: border-box;
 }
 
-.login-card {
-  background-color: #ffffff;
-  color: #000;
+.login-container {
+  color: #ffffff;
   padding: 20px 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  width: 360px;
+  width: 450px;
+  max-width: 90%;
   text-align: center;
   animation: fadeIn 0.6s ease-in-out;
+}
+
+.login-logo {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-logo img {
+  max-width: 300px;
+  height: auto;
+  filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5));
 }
 
 .gradient-text {
@@ -31,25 +42,38 @@
   color: transparent;
   font-weight: 700;
   font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin-top: -2rem;
+  margin-bottom: 0.5rem;
+  /* --- CAMBIOS AQUÍ --- */
+  line-height: 1; /* Asegura que la altura de línea no corte el texto */
+  padding-bottom: 5px; /* Un poco de padding para que el clip no corte por abajo */
+  display: inline-block; /* Necesario para que el padding y line-height funcionen bien con text-clip */
+  /* --- FIN DE CAMBIOS --- */
+}
+
+.slogan {
+  color: #b3b3b3;
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: 5px;
-}
-
-button[mat-raised-button] {
-  width: 100%;
-  padding: 1.25rem 0;
-  font-size: 1rem;
-  font-weight: 500;
-  background-color: var(--color-secondary);
-  color: var(--color-light);
-}
-
-button[mat-raised-button]:hover {
-  background-color: #00497a;
+  --mat-form-field-floating-label-text-color: #b3b3b3;
+  --mat-form-field-subscript-text-color: #b3b3b3;
+  --mat-form-field-focus-state-layer-color: var(--color-secondary);
+  --mat-form-field-hover-state-layer-color: var(--color-secondary);
+  --mat-form-field-container-text-color: #ffffff;
+  --mat-form-field-outline-color: #727272;
+  --mat-form-field-focus-outline-color: #ffffff;
 }
 
 .links-container {
@@ -60,12 +84,13 @@ button[mat-raised-button]:hover {
 }
 
 .link {
-  color: var(--color-secondary);
+  color: #b3b3b3;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
 }
 .link:hover {
+  color: #ffffff;
   text-decoration: underline;
 }
 
@@ -73,31 +98,48 @@ button[mat-raised-button]:hover {
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 1.5rem 0;
-  color: #aaa;
+  margin: 1rem 0;
+  color: #b3b3b3;
 }
 .separator::before, .separator::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #727272;
 }
 .separator::before { margin-right: 0.5em; }
 .separator::after { margin-left: 0.5em; }
+
+button[mat-raised-button] {
+  width: 100%;
+  padding: 1.25rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  border-radius: 500px;
+}
+button[mat-raised-button]:hover {
+  transform: scale(1.04);
+  background-color: #0069d9;
+}
 
 button[mat-stroked-button] {
   width: 100%;
   padding: 1.25rem 0;
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #555;
-  border-color: #ccc;
+  font-weight: 700;
+  color: #fff;
+  border-color: #727272;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  border-radius: 500px;
 }
 button[mat-stroked-button]:hover {
-  background-color: #f9f9f9;
+  border-color: #fff;
+  background-color: #282828;
 }
 .google-logo {
   width: 20px;
@@ -108,7 +150,7 @@ button[mat-stroked-button]:hover {
   text-align: center;
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: #333;
+  color: #b3b3b3;
 }
 
 @keyframes fadeIn {

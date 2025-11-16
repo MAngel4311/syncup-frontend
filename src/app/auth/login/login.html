@@ -1,36 +1,40 @@
 <div class="login-container">
-  <div class="login-card">
-    <h2 class="gradient-text">SyncUp</h2>
-    
-    <form (ngSubmit)="onLogin()">
-      
-      <mat-form-field appearance="outline">
-        <mat-label>Usuario</mat-label>
-        <input matInput [(ngModel)]="username" name="username" type="text" required>
-      </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" required>
-      </mat-form-field>
-
-      <div class="links-container">
-        <a routerLink="/recuperar-contrasena" class="link">Recuperar contraseña</a>
-      </div>
-
-      <button mat-raised-button type="submit">Ingresar</button>
-      
-      <div class="separator"><span>O</span></div>
-
-      <button mat-stroked-button type="button" (click)="loginWithGoogle()">
-        <img src="assets/logo-google.png" alt="Google Logo" class="google-logo">
-        Iniciar sesión con Google
-      </button>
-
-      <div class="register-link">
-        <span>¿No tienes una cuenta? <a routerLink="/register" class="link">Regístrate Aquí</a></span>
-      </div>
-
-    </form>
+  <div class="login-logo">
+    <img src="assets/logo-syncup.png" alt="SyncUp Logo">
   </div>
+  
+  <h2 class="gradient-text">SyncUp</h2>
+  <p class="slogan">Tu música, tu mundo.</p>
+  
+  <form (ngSubmit)="onSubmit()">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario (Email)</mat-label>
+      <input matInput [(ngModel)]="username" name="username" type="text" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" required>
+    </mat-form-field>
+
+    <div class="links-container">
+      <a routerLink="/recuperar-contrasena" class="link">Recuperar contraseña</a>
+    </div>
+
+    <button mat-raised-button type="submit">Ingresar</button>
+    
+    <div class="separator"><span>O</span></div>
+
+    <button mat-stroked-button type="button" (click)="loginWithGoogle()">
+      <img src="assets/logo-google.png" alt="Google Logo" class="google-logo">
+      Iniciar sesión con Google
+    </button>
+
+    <div class="register-link">
+      <span>¿No tienes una cuenta? <a routerLink="/registro" class="link">Regístrate Aquí</a></span>
+    </div>
+
+  </form>
 </div>

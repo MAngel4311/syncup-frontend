@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, AbstractContro
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { Auth } from '../../../services/auth'; 
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -18,7 +17,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        RouterLink,
         MatProgressSpinnerModule
     ],
     templateUrl: './step-email.html',
