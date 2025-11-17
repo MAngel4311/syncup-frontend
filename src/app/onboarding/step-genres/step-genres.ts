@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class StepGenres implements OnInit {
   @Output() formValidity = new EventEmitter<boolean>();
+  @Output() selectionChange = new EventEmitter<Set<string>>();
 
   allGenres: string[] = [];
   selectedGenres: Set<string> = new Set();
@@ -30,7 +31,7 @@ export class StepGenres implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar géneros:', err);
-        this.allGenres = ['Pop', 'Rock', 'Urbano', 'Salsa', 'Vallenato', 'Electronica', 'Clasica', 'Jazz', 'Folk', 'Hip Hop'];
+        this.allGenres = ['Pop', 'Rock', 'Urbano', 'Salsa', 'Vallenato', 'Electronica', 'Clasica', 'Jazz', 'Folk', 'Hip Hop', 'Bolero','Reggaeton','Merengue'];
       }
     });
   }
@@ -44,6 +45,7 @@ export class StepGenres implements OnInit {
       }
     }
     this.checkValidity();
+    this.selectionChange.emit(this.selectedGenres);
   }
 
   isSelected(genre: string): boolean {

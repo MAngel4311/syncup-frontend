@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { StepArtists } from '../step-artists/step-artists';
 import { StepGenres } from '../step-genres/step-genres';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-onboarding-layout',
@@ -20,11 +21,22 @@ import { StepGenres } from '../step-genres/step-genres';
 export class OnboardingLayout {
   currentStep = 1;
   isStepValid = false;
+  
+  selectedArtists: Set<string> = new Set();
+  selectedGenres: Set<string> = new Set();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: Auth) {}
 
   onStepValidityChange(isValid: boolean) {
     this.isStepValid = isValid;
+  }
+  
+  onArtistsChange(artists: Set<string>) {
+    this.selectedArtists = artists;
+  }
+
+  onGenresChange(genres: Set<string>) {
+    this.selectedGenres = genres;
   }
 
   nextStep() {
@@ -35,8 +47,19 @@ export class OnboardingLayout {
 
   finishOnboarding() {
     if (!this.isStepValid) return;
-    console.log("Asistente completado. Redirigiendo al dashboard...");
     
-    this.router.navigate(['/dashboard']);
+    const artistas = Array.from(this.selectedArtists);
+    const generos = Array.from(this.selectedGenres);
+
+    this.authService.completeOnboarding(artistas, generos).subscribe({
+      next: () => {
+        this.authService.updateOnboardingStatus(true);
+        console.log("Onboarding completado y guardado. Redirigiendo al dashboard...");
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error("Error al guardar el onboarding:", err);
+      }
+    });
   }
 }

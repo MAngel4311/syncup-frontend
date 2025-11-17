@@ -1,0 +1,84 @@
+.home-container {
+  padding: 24px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.song-card {
+  width: 100%;
+  height: 100%;
+  background-color: #181818;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.song-card:hover {
+  background-color: #282828;
+}
+
+.song-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.song-card mat-card-content {
+  padding: 0 16px 16px 16px;
+  color: #ffffff;
+}
+
+.song-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  margin: 4px 0 0 0;
+}
+
+.suggestions-list {
+  max-width: 600px;
+}
+
+.suggestions-list .mat-list-item-content {
+  background-color: #181818;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.user-name {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.user-username {
+  color: #b3b3bD;
+}

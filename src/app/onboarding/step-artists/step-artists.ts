@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class StepArtists implements OnInit {
 
   @Output() formValidity = new EventEmitter<boolean>();
+  @Output() selectionChange = new EventEmitter<Set<string>>();
 
   allArtists: string[] = [];
   displayArtists: string[] = [];
@@ -50,7 +51,22 @@ export class StepArtists implements OnInit {
       'Saga Kastronovo',
       'Blessd',
       'Ricardo Arjona',
-      'Pipe Pelaez'
+      'Pipe Pelaez',
+      '2Pac',
+      'Bad Bunny',
+      'Chichi Peralta',
+      'De La Rose',
+      'Julio Jaramillo',
+      'Justin Bieber',
+      'Kapo',
+      'Milo j',
+      'Mora',
+      'Omar Courtz',
+      'Penyair',
+      'Romeo Santos',
+      'The Weeknd',
+      'Trueno',
+      'Vilma Palma E Vampiros'
     ];
 
     this.allArtists = artistsFromAssets;
@@ -76,6 +92,7 @@ export class StepArtists implements OnInit {
       }
     }
     this.checkValidity();
+    this.selectionChange.emit(this.selectedArtists);
   }
 
   checkValidity(): void {

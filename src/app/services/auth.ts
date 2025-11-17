@@ -59,4 +59,14 @@ export class Auth {
   isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
+
+  completeOnboarding(artistas: string[], generos: string[]): Observable<void> {
+    const request = { artistas, generos };
+    const usersApiUrl = this.API_URL.replace('/auth', '/users');
+    return this.http.post<void>(`${usersApiUrl}/me/onboarding`, request);
+  }
+
+  updateOnboardingStatus(status: boolean): void {
+    localStorage.setItem(this.onboardingKey, String(status));
+  }
 }
