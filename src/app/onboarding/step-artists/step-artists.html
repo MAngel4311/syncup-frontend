@@ -1,1 +1,31 @@
-<p>step-artists works!</p>
+<div class="step-container">
+  <h2>Elige 3 artistas que te gusten</h2>
+  <p>Esto nos ayudará a crear tu perfil musical.</p>
+
+  <mat-form-field appearance="outline" class="filter-input">
+    <mat-label>Busca un artista...</mat-label>
+    <input matInput [(ngModel)]="filterText" placeholder="Ej. Michael Jackson">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="artist-grid-flex">
+    <div 
+        *ngFor="let artist of displayArtists"
+        class="artist-card"
+        (click)="toggleArtist(artist)"
+        [class.selected]="isSelected(artist)">
+      
+      <img [src]="getImagePath(artist)" [alt]="artist" class="artist-image">
+      <div class="artist-name">{{ artist }}</div>
+      
+      <div class="selection-overlay" *ngIf="isSelected(artist)">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+
+    </div>
+  </div>
+  
+  <p class="count-text" [class.error]="selectedArtists.size < 3">
+    Seleccionados: {{ selectedArtists.size }} / 3
+  </p>
+</div>

@@ -1,1 +1,20 @@
-<p>step-genres works!</p>
+<div class="step-container">
+  <h2>Ahora, elige 3 géneros musicales</h2>
+  <p>Esto completará tu perfil inicial.</p>
+
+  <mat-chip-listbox 
+    class="genre-list" 
+    aria-label="Selección de géneros"
+    multiple="true">
+    <mat-chip-option 
+      *ngFor="let genre of allGenres"
+      [selected]="isSelected(genre)"
+      (click)="toggleGenre(genre)">
+      {{ genre }}
+    </mat-chip-option>
+  </mat-chip-listbox>
+  
+  <p class="count-text" [class.error]="selectedGenres.size < 3">
+    Seleccionados: {{ selectedGenres.size }} / 3
+  </p>
+</div>

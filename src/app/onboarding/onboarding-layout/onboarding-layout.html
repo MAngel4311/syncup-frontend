@@ -4,21 +4,30 @@
   </div>
 
   <div class="wizard-content" [ngSwitch]="currentStep">
-    <app-step-artists *ngSwitchCase="1"></app-step-artists>
-    <app-step-genres *ngSwitchCase="2"></app-step-genres>
+    <app-step-artists 
+        *ngSwitchCase="1"
+        (formValidity)="onStepValidityChange($event)">
+    </app-step-artists>
+    
+    <app-step-genres 
+        *ngSwitchCase="2"
+        (formValidity)="onStepValidityChange($event)">
+    </app-step-genres>
   </div>
 
   <div class="wizard-actions">
     <button 
         mat-raised-button 
         *ngIf="currentStep === 1" 
-        (click)="nextStep()">
+        (click)="nextStep()"
+        [disabled]="!isStepValid">
       Siguiente
     </button>
     <button 
         mat-raised-button 
         *ngIf="currentStep === 2" 
-        (click)="finishOnboarding()">
+        (click)="finishOnboarding()"
+        [disabled]="!isStepValid">
       Finalizar
     </button>
   </div>

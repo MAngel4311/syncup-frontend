@@ -19,15 +19,24 @@ import { StepGenres } from '../step-genres/step-genres';
 })
 export class OnboardingLayout {
   currentStep = 1;
+  isStepValid = false;
 
   constructor(private router: Router) {}
 
+  onStepValidityChange(isValid: boolean) {
+    this.isStepValid = isValid;
+  }
+
   nextStep() {
+    if (!this.isStepValid) return;
     this.currentStep++;
+    this.isStepValid = false;
   }
 
   finishOnboarding() {
+    if (!this.isStepValid) return;
     console.log("Asistente completado. Redirigiendo al dashboard...");
+    
     this.router.navigate(['/dashboard']);
   }
 }
