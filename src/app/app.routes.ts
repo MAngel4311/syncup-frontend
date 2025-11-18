@@ -14,6 +14,7 @@ import { adminAuthGuard } from './security/admin-auth.guard';
 import { AdminLayoutComponent } from './admin/admin-layout';
 import { ManageUsersComponent } from './admin/manage-users/manage-users';
 import { ManageSongsComponent } from './admin/manage-songs';
+import { AdminDashboardComponent } from './admin/admin-dashboard';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -43,9 +44,10 @@ export const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [authGuard, adminAuthGuard],
     children: [
+      { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'users', component: ManageUsersComponent },
       { path: 'songs', component: ManageSongsComponent },
-      { path: '', redirectTo: 'users', pathMatch: 'full' }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
   

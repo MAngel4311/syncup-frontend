@@ -3,6 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDto, SongDto } from './song';
 
+export interface ChartDataDto {
+  label: string;
+  value: number;
+}
+
+export interface AdminDashboardMetricsDto {
+  totalUsuarios: number;
+  totalCanciones: number;
+  generoChartData: ChartDataDto[];
+  artistaChartData: ChartDataDto[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +55,9 @@ export class AdminService {
     return this.http.post(`${this.ADMIN_API_URL}/songs/bulk-upload`, formData, {
       responseType: 'text'
     });
+  }
+
+  getMetrics(): Observable<AdminDashboardMetricsDto> {
+    return this.http.get<AdminDashboardMetricsDto>(`${this.ADMIN_API_URL}/metrics`);
   }
 }

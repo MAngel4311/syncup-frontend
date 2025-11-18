@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+  
+  <h2>Dashboard (RF-013)</h2>
+
+  <div class="metrics-grid">
+    <mat-card class="metric-card">
+      <mat-card-header>
+        <mat-card-title>{{ metrics?.totalUsuarios || 0 }}</mat-card-title>
+        <mat-card-subtitle>Usuarios (USER)</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <mat-card class="metric-card">
+      <mat-card-header>
+        <mat-card-title>{{ metrics?.totalCanciones || 0 }}</mat-card-title>
+        <mat-card-subtitle>Canciones en Catálogo</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  <h2>Gráficos (RF-014)</h2>
+  
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Canciones por Género</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="chart-content">
+        <canvas baseChart
+          [type]="'pie'"
+          [datasets]="pieChartData"
+          [labels]="pieChartLabels"
+          [options]="pieChartOptions">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Top 10 Artistas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="chart-content">
+        <canvas baseChart
+          [type]="'bar'"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
