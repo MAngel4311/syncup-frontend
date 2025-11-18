@@ -55,10 +55,21 @@
     <div *ngIf="!isLoadingSearch && searchResults.length > 0">
         <h3>Canciones Encontradas ({{ searchResults.length }})</h3>
         <mat-list>
-            <mat-list-item *ngFor="let song of searchResults" class="song-result-item" (click)="playSong(song)">
+            <mat-list-item *ngFor="let song of searchResults" class="song-result-item">
                 <mat-icon matListItemIcon>music_note</mat-icon>
-                <div matListItemTitle class="song-title">{{ song.titulo }}</div>
-                <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
+                <div class="song-info-text" (click)="playSong(song)">
+                    <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+                    <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
+                </div>
+                
+                <div matListItemMeta class="song-actions-buttons">
+                    <button mat-icon-button class="radio-button" 
+                            (click)="startRadio($event, song)"
+                            matTooltip="Iniciar Radio (temas similares)">
+                      <mat-icon>radio</mat-icon>
+                    </button>
+                    </div>
+
             </mat-list-item>
         </mat-list>
     </div>

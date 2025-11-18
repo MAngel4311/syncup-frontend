@@ -113,7 +113,22 @@ h2 {
 }
 
 .user-info-text {
-    flex-grow: 1; /* Permite que el texto crezca y el botón se quede a la derecha */
+    flex-grow: 1; 
     min-width: 0;
     margin-right: 16px;
+}
+.song-card mat-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.song-actions-buttons {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.radio-button {
+    color: #4CAF50; 
 }

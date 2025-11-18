@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Song, SongDto, UserDto } from '../../services/song';
 import { HttpClientModule } from '@angular/common/http';
 import { PlayerService } from '../../services/player.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,11 +32,12 @@ export class Home implements OnInit {
   discoverWeekly: SongDto[] = [];
   userSuggestions: UserDto[] = [];
   favoriteSongIds = new Set<number>();
-  followingUsernames = new Set<string>(); // NUEVO: Para saber a quién seguimos
+  followingUsernames = new Set<string>();
 
   constructor(
     private songService: Song,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +55,6 @@ export class Home implements OnInit {
       next: (users: UserDto[]) => this.userSuggestions = users,
       error: (err: any) => console.error('Error al cargar sugerencias de usuarios:', err)
     });
-    // Nota: Aquí se debería cargar también la lista de 'seguidos' para filtrar/actualizar
-    // Pero por simplicidad, lo haremos asumiendo que las sugerencias no incluyen seguidos
   }
 
   loadFavorites(): void {
@@ -108,16 +108,28 @@ export class Home implements OnInit {
     favorites.forEach(song => this.favoriteSongIds.add(song.id));
   }
 
-  // Gestión de Seguidores
   followUser(user: UserDto): void {
     this.songService.followUser(user.username).subscribe({
       next: (response) => {
         console.log(response);
-        // Quitar al usuario de la lista de sugerencias después de seguirlo
         this.userSuggestions = this.userSuggestions.filter(u => u.username !== user.username);
-        // Opcional: Mostrar notificación de éxito
+        alert(`¡Ahora sigues a ${user.nombre}!`);
       },
       error: (err) => console.error('Error al seguir usuario:', err)
+    });
+  }
+  
+  // --- NUEVA FUNCIONALIDAD: INICIAR RADIO (RF-006) ---
+  startRadio(event: MouseEvent, song: SongDto): void {
+    event.stopPropagation();
+
+    this.songService.startRadio(song.id).subscribe({
+      next: (queue) => {
+        this.playerService.playQueue(queue);
+        alert(`Radio iniciada con ${queue.length} canciones similares.`);
+        this.router.navigate(['/dashboard/home']); // Permanecer o redirigir si se quiere mostrar la cola
+      },
+      error: (err) => console.error('Error al iniciar Radio:', err)
     });
   }
 }

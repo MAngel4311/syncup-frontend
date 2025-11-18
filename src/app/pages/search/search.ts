@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, forkJoin } from 'rxjs';
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router'; // Importación necesaria para la función startRadio
 
 // --- Imports de Angular Material ---
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip'; // Añadida para el tooltip del botón de Radio
 
 // --- Servicios que ya tenemos ---
 import { Song, SongDto, UserDto } from '../../services/song';
@@ -31,7 +33,8 @@ import { PlayerService } from '../../services/player.service';
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    RouterLink // AÑADIDA AQUÍ
+    MatTooltipModule,
+    RouterLink
   ],
   templateUrl: './search.html',
   styleUrl: './search.css'
@@ -49,7 +52,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private songService: Song,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router // Inyección del router
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +119,23 @@ export class SearchComponent implements OnInit {
         alert(`¡Ahora sigues a ${user.nombre}!`);
       },
       error: (err) => console.error('Error al seguir usuario:', err)
+    });
+  }
+
+  /**
+   * Inicia la Radio (RF-006) a partir de una canción de los resultados.
+   */
+  startRadio(event: MouseEvent, song: SongDto): void {
+    event.stopPropagation();
+
+    this.songService.startRadio(song.id).subscribe({
+      next: (queue) => {
+        this.playerService.playQueue(queue);
+        alert(`Radio iniciada con ${queue.length} canciones similares.`);
+        // Navegar a home para ver la cola/player
+        this.router.navigate(['/dashboard/home']); 
+      },
+      error: (err) => console.error('Error al iniciar Radio:', err)
     });
   }
 }

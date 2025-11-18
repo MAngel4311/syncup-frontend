@@ -12,13 +12,22 @@
             <p class="song-artist">{{ song.artista }}</p>
           </div>
           
-          <button mat-icon-button class="favorite-button" 
-                  (click)="toggleFavorite($event, song)"
-                  matTooltip="{{ isFavorite(song) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}">
-            <mat-icon [class.is-favorite]="isFavorite(song)">
-              {{ isFavorite(song) ? 'favorite' : 'favorite_border' }}
-            </mat-icon>
-          </button>
+          <div class="song-actions-buttons">
+            <button mat-icon-button class="favorite-button" 
+                    (click)="toggleFavorite($event, song)"
+                    matTooltip="{{ isFavorite(song) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}">
+              <mat-icon [class.is-favorite]="isFavorite(song)">
+                {{ isFavorite(song) ? 'favorite' : 'favorite_border' }}
+              </mat-icon>
+            </button>
+            
+            <button mat-icon-button class="radio-button" 
+                    (click)="startRadio($event, song)"
+                    matTooltip="Iniciar Radio (temas similares)">
+              <mat-icon>radio</mat-icon>
+            </button>
+          </div>
+
         </mat-card-content>
 
       </mat-card>
@@ -35,7 +44,7 @@
         <div matListItemTitle class="user-name">{{ user.nombre }}</div>
         <div matListItemLine class="user-username">{{ user.username }}</div>
       </div>
-      <div matListItemMeta class="user-actions">
+      <div matListItemMeta>
         <button mat-button color="primary" (click)="followUser(user)">
           Seguir
         </button>

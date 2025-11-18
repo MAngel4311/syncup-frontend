@@ -55,8 +55,28 @@
       <span class="player-title">{{ currentSong.titulo }}</span>
       <span class="player-artist">{{ currentSong.artista }}</span>
     </div>
-    
-    <audio [src]="currentSongUrl" controls autoplay class="audio-player"></audio>
+
+    <div class="player-controls-container">
+      <div class="player-buttons">
+        <button mat-icon-button (click)="playPrevious()" [disabled]="!canPlayPrevious()">
+            <mat-icon>skip_previous</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="togglePlayPause()">
+            <mat-icon>{{ isPlaying ? 'pause_circle_filled' : 'play_circle_filled' }}</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="playNext()" [disabled]="!canPlayNext()">
+            <mat-icon>skip_next</mat-icon>
+        </button>
+      </div>
+
+      <div class="player-status-bar">
+          <audio #audioElement [src]="currentSongUrl" autoplay (ended)="onSongEnded()"></audio>
+          <span *ngIf="currentSong">Reproduciendo: {{ currentSong.titulo }}</span>
+          <span *ngIf="queueCount > 0" class="queue-count"> | Cola: {{ queueCount }}</span>
+      </div>
+    </div>
   </mat-toolbar>
 
 </div>

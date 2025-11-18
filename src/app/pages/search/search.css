@@ -80,3 +80,25 @@ h2 {
   text-align: center;
   margin-top: 40px;
 }
+/* Nuevo bloque para alinear el botón de radio en los resultados de búsqueda */
+.song-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-info-text {
+    flex-grow: 1;
+    min-width: 0;
+    cursor: pointer;
+    padding-left: 10px; /* Pequeño espacio desde el ícono de música */
+}
+
+.song-actions-buttons {
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.radio-button {
+    color: #4CAF50;
+}

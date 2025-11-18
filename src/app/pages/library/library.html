@@ -2,6 +2,12 @@
   
   <div class="library-header">
     <h2>Tu Biblioteca</h2>
+    
+    <button mat-flat-button color="accent" (click)="playAll()" [disabled]="favoriteSongs.length === 0" matTooltip="Reproducir todas las canciones de tu Biblioteca">
+      <mat-icon>play_arrow</mat-icon>
+      Reproducir Todo
+    </button>
+
     <button mat-flat-button color="primary" (click)="exportToCsv()">
       <mat-icon>download</mat-icon>
       Exportar a CSV

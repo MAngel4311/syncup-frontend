@@ -84,12 +84,15 @@ export class Song {
     return this.http.get<UserDto[]>(`${this.USERS_API_URL}/search`, { params });
   }
 
-  // --- NUEVOS MÉTODOS PARA PERFIL PÚBLICO ---
   getPublicProfile(username: string): Observable<UserDto> {
     return this.http.get<UserDto>(`${this.USERS_API_URL}/profile/${username}`);
   }
 
   getPublicFavorites(username: string): Observable<SongDto[]> {
     return this.http.get<SongDto[]>(`${this.USERS_API_URL}/profile/${username}/favorites`);
+  }
+  
+  startRadio(songId: number): Observable<SongDto[]> {
+    return this.http.get<SongDto[]>(`${this.API_URL}/recommendations/radio/${songId}`);
   }
 }

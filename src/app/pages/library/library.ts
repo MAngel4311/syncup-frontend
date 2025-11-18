@@ -55,6 +55,15 @@ export class LibraryComponent implements OnInit {
     this.playerService.playSong(song);
   }
 
+  playAll(): void {
+    if (this.favoriteSongs.length > 0) {
+      this.playerService.playQueue(this.favoriteSongs);
+      alert(`Reproduciendo ${this.favoriteSongs.length} canciones de tu Biblioteca.`);
+    } else {
+      alert('Tu Biblioteca está vacía. ¡Añade algunas canciones!');
+    }
+  }
+
   exportToCsv(): void {
     this.songService.exportFavorites().subscribe({
       next: (blob) => {

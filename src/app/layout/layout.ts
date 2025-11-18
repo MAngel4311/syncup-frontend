@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -29,11 +29,17 @@ import { Subscription } from 'rxjs';
 })
 export class Layout implements OnInit, OnDestroy {
 
+  @ViewChild('audioElement') audioElementRef!: ElementRef<HTMLAudioElement>;
+
   userName: string = '';
   isAdmin: boolean = false;
   currentSong: SongDto | null = null;
   currentSongUrl: string = '';
+  isPlaying: boolean = false;
+  queueCount: number = 0;
+  
   private playerSubscription: Subscription | null = null;
+  private queueSubscription: Subscription | null = null;
 
   constructor(
     private auth: Auth, 
@@ -46,13 +52,22 @@ export class Layout implements OnInit, OnDestroy {
     this.isAdmin = this.auth.isAdmin();
     
     this.playerSubscription = this.playerService.currentSong$.subscribe(song => {
-      if (song) {
-        this.currentSong = song;
-        this.currentSongUrl = this.playerService.getSongUrl(song);
-      } else {
-        this.currentSong = null;
-        this.currentSongUrl = '';
+      this.currentSong = song;
+      this.currentSongUrl = song ? this.playerService.getSongUrl(song) : '';
+      this.isPlaying = !!song;
+      
+      if (this.audioElementRef && this.audioElementRef.nativeElement) {
+          if (song) {
+              this.audioElementRef.nativeElement.load();
+              this.audioElementRef.nativeElement.play();
+          } else {
+              this.audioElementRef.nativeElement.pause();
+          }
       }
+    });
+    
+    this.queueSubscription = this.playerService.queue$.subscribe(queue => {
+        this.queueCount = queue.length;
     });
   }
 
@@ -60,6 +75,42 @@ export class Layout implements OnInit, OnDestroy {
     if (this.playerSubscription) {
       this.playerSubscription.unsubscribe();
     }
+    if (this.queueSubscription) {
+        this.queueSubscription.unsubscribe();
+    }
+  }
+  
+  togglePlayPause(): void {
+      if (this.audioElementRef && this.audioElementRef.nativeElement) {
+          const audio = this.audioElementRef.nativeElement;
+          if (this.isPlaying) {
+              audio.pause();
+          } else {
+              audio.play();
+          }
+          this.isPlaying = !this.isPlaying;
+      }
+  }
+  
+  playNext(): void {
+      this.playerService.playNext();
+  }
+
+  playPrevious(): void {
+      this.playerService.playPrevious();
+  }
+
+  canPlayNext(): boolean {
+      return this.queueCount > 0;
+  }
+  
+  canPlayPrevious(): boolean {
+      const history = this.playerService.getHistoryValue();
+      return history.length > 0;
+  }
+  
+  onSongEnded(): void {
+      this.playerService.playNext();
   }
 
   logout() {
