@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SongDto {
@@ -9,11 +9,14 @@ export interface SongDto {
   genero: string;
   anio: number;
   duracion: number;
+  filename: string;
 }
 
 export interface UserDto {
+  id: number;
   username: string;
   nombre: string;
+  rol: string;
 }
 
 @Injectable({
@@ -22,6 +25,7 @@ export interface UserDto {
 export class Song {
 
   private readonly API_URL = 'http://localhost:8080/api';
+  private readonly USERS_API_URL = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) { }
 
@@ -38,6 +42,34 @@ export class Song {
   }
   
   getUserSuggestions(): Observable<UserDto[]> {
-    return this.http.get<UserDto[]>(`${this.API_URL}/users/suggestions`);
+    return this.http.get<UserDto[]>(`${this.USERS_API_URL}/suggestions`);
+  }
+
+  autocomplete(prefix: string): Observable<string[]> {
+    const params = new HttpParams().set('prefix', prefix);
+    return this.http.get<string[]>(`${this.API_URL}/songs/autocomplete`, { params });
+  }
+
+  search(query: string): Observable<SongDto[]> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<SongDto[]>(`${this.API_URL}/songs/search`, { params });
+  }
+
+  getFavorites(): Observable<SongDto[]> {
+    return this.http.get<SongDto[]>(`${this.USERS_API_URL}/me/favorites`);
+  }
+
+  exportFavorites(): Observable<Blob> {
+    return this.http.get(`${this.USERS_API_URL}/me/favorites/export`, {
+      responseType: 'blob'
+    });
+  }
+
+  addFavorite(songId: number): Observable<SongDto[]> {
+    return this.http.post<SongDto[]>(`${this.USERS_API_URL}/me/favorites/${songId}`, {});
+  }
+
+  removeFavorite(songId: number): Observable<SongDto[]> {
+    return this.http.delete<SongDto[]>(`${this.USERS_API_URL}/me/favorites/${songId}`);
   }
 }

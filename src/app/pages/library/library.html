@@ -1,0 +1,39 @@
+<div class="library-container">
+  
+  <div class="library-header">
+    <h2>Tu Biblioteca</h2>
+    <button mat-flat-button color="primary" (click)="exportToCsv()">
+      <mat-icon>download</mat-icon>
+      Exportar a CSV
+    </button>
+  </div>
+  
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && favoriteSongs.length === 0" class="no-results">
+    <mat-icon class="no-results-icon">music_off</mat-icon>
+    <h3>Aún no tienes favoritos</h3>
+    <p>Explora la música y añade las canciones que te gusten.</p>
+  </div>
+
+  <mat-list *ngIf="!isLoading && favoriteSongs.length > 0" class="results-list">
+    <mat-list-item *ngFor="let song of favoriteSongs" class="song-result-item" (click)="playSong(song)">
+      
+      <mat-icon matListItemIcon>music_note</mat-icon>
+      <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+      <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
+      
+      <div matListItemMeta>
+        <button mat-icon-button class="remove-button" 
+                (click)="removeSong($event, song)"
+                matTooltip="Quitar de favoritos">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+
+    </mat-list-item>
+  </mat-list>
+
+</div>

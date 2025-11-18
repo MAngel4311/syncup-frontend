@@ -1,0 +1,43 @@
+.manage-users-container {
+  max-width: 900px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.user-list {
+  width: 100%;
+}
+
+.user-item {
+  background-color: #181818;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  min-height: 72px
+}
+
+.user-item:hover {
+  background-color: #282828;
+}
+
+.user-name {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.user-username {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+}

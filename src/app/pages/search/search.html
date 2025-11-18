@@ -1,0 +1,47 @@
+<div class="search-container">
+  
+  <h2>Busca en todo el catálogo</h2>
+  <p class="search-hint">
+    Usa búsquedas simples (ej: "Luna") o avanzadas (ej: "artista:2Pac AND genero:Rap").
+  </p>
+
+  <mat-form-field class="search-bar" appearance="outline">
+    <mat-label>Artista, canción, género o año...</mat-label>
+    <input 
+      type="text" 
+      matInput 
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      (keyup.enter)="onSearchSubmit()">
+    
+    <mat-icon matSuffix>search</mat-icon>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let suggestion of autocompleteResults$ | async" [value]="suggestion">
+        {{ suggestion }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+  <div class="results-container">
+
+    <div *ngIf="isLoadingSearch" class="spinner-container">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+
+    <mat-list *ngIf="!isLoadingSearch && searchResults.length > 0">
+      <mat-list-item *ngFor="let song of searchResults" class="song-result-item" (click)="playSong(song)">
+        <mat-icon matListItemIcon>music_note</mat-icon>
+        <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+        <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
+      </mat-list-item>
+    </mat-list>
+
+    <div *ngIf="!isLoadingSearch && searchResults.length === 0" class="no-results">
+      <p>No se encontraron resultados. Intenta con otra consulta.</p>
+    </div>
+
+  </div>
+
+</div>

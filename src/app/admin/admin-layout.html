@@ -1,0 +1,31 @@
+<mat-sidenav-container class="admin-container">
+  
+  <mat-sidenav mode="side" opened class="admin-sidenav">
+    <div class="logo-container">
+      <h1 class="sidebar-title">SyncUp</h1>
+      <p class="slogan-user">Panel de Admin</p>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/admin/users" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>Gestionar Usuarios</span>
+      </a>
+      <a mat-list-item routerLink="/admin/songs" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>music_note</mat-icon>
+        <span matListItemTitle>Gestionar Canciones</span>
+      </a>
+      
+      <a mat-list-item routerLink="/dashboard/home">
+        <mat-icon matListItemIcon>arrow_back</mat-icon>
+        <span matListItemTitle>Volver a la App</span>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content class="admin-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

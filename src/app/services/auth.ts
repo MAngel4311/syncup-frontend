@@ -69,4 +69,27 @@ export class Auth {
   updateOnboardingStatus(status: boolean): void {
     localStorage.setItem(this.onboardingKey, String(status));
   }
+
+  private decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      const decodedPayload = atob(payload);
+      return JSON.parse(decodedPayload);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getRole(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const decoded = this.decodeToken(token);
+    return decoded ? decoded.rol : null;
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'ADMIN';
+  }
 }

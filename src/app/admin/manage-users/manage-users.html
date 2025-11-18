@@ -1,0 +1,27 @@
+<div class="manage-users-container">
+  <h2>Gestionar Usuarios</h2>
+  
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <mat-list *ngIf="!isLoading" class="user-list">
+    <mat-list-item *ngFor="let user of users" class="user-item">
+      
+      <mat-icon matListItemIcon [matTooltip]="user.rol">{{ user.rol === 'ADMIN' ? 'admin_panel_settings' : 'person' }}</mat-icon>
+      <div matListItemTitle class="user-name">{{ user.nombre }}</div>
+      <div matListItemLine class="user-username">{{ user.username }}</div>
+      
+      <div matListItemMeta>
+        <button mat-icon-button color="warn" 
+                (click)="deleteUser(user)"
+                [disabled]="user.rol === 'ADMIN'"
+                matTooltip="Eliminar usuario">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+
+    </mat-list-item>
+  </mat-list>
+
+</div>

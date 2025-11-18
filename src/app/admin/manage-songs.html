@@ -1,0 +1,107 @@
+<div class="manage-songs-container">
+  
+  <mat-tab-group #tabGroup>
+    
+    <mat-tab label="{{ editingSongId ? 'Editar Canción' : 'Añadir Canción' }} (RF-010)">
+      <div class="tab-content">
+        <h3>{{ editingSongId ? 'Editando: ' + addSongForm.value.titulo : 'Añadir una canción al catálogo' }}</h3>
+        
+        <form [formGroup]="addSongForm" (ngSubmit)="onAddSongSubmit()" class="song-form">
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Título</mat-label>
+            <input matInput formControlName="titulo">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Artista</mat-label>
+            <input matInput formControlName="artista">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Género</mat-label>
+            <input matInput formControlName="genero">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Año</mat-label>
+            <input matInput type="number" formControlName="anio">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Duración (segundos)</mat-label>
+            <input matInput type="number" formControlName="duracion">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre del Archivo (ej: cancion.mp3)</mat-label>
+            <input matInput formControlName="filename">
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="addSongForm.invalid">
+              {{ editingSongId ? 'Actualizar Canción' : 'Añadir Canción' }}
+            </button>
+            <button mat-button type="button" (click)="cancelEdit()" *ngIf="editingSongId">
+              Cancelar Edición
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Gestionar Catálogo (RF-010)">
+      <div class="tab-content">
+        <h3>Todas las Canciones</h3>
+
+        <div *ngIf="isLoadingList" class="spinner-container">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+
+        <mat-list *ngIf="!isLoadingList" class="song-list">
+          <mat-list-item *ngFor="let song of allSongs" class="song-list-item">
+            <mat-icon matListItemIcon>music_note</mat-icon>
+            <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+            <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.genero }}</div>
+            
+            <div matListItemMeta class="song-actions">
+              <button mat-icon-button (click)="startEdit(song)" matTooltip="Editar canción">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="onDeleteSong(song)" matTooltip="Eliminar canción">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-tab>
+    
+    <mat-tab label="Carga Masiva (RF-012)">
+      <div class="tab-content">
+        <h3>Subir un archivo .csv de canciones</h3>
+        
+        <div class="bulk-upload-form">
+          <input type="file" (change)="onFileSelected($event)" accept=".csv">
+          <button mat-flat-button color="primary" (click)="onBulkUpload()" [disabled]="!csvFile || isLoadingUpload">
+            <mat-icon>upload</mat-icon>
+            Subir CSV
+          </button>
+        </div>
+        
+        <div *ngIf="isLoadingUpload" class="spinner-container">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Subiendo archivo...</p>
+        </div>
+
+        <div *ngIf="uploadResponse" class="upload-response" [class.error]="uploadIsError">
+          <h4>Respuesta del servidor:</h4>
+          <pre>{{ uploadResponse }}</pre>
+        </div>
+        
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>
