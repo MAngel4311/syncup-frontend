@@ -3,11 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+// Definición para los datos de actualización
+export interface UserUpdateDto {
+  nombre?: string;
+  currentPassword?: string;
+  newPassword?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   private readonly API_URL = 'http://localhost:8080/api/auth';
+  private readonly USERS_API_URL = 'http://localhost:8080/api/users';
   private readonly tokenKey = 'syncup-token';
   private readonly userNameKey = 'syncup-username';
   private readonly onboardingKey = 'syncup-onboarding-status';
@@ -91,5 +99,17 @@ export class Auth {
 
   isAdmin(): boolean {
     return this.getRole() === 'ADMIN';
+  }
+
+  // --- NUEVO MÉTODO PARA RF-002 (Gestión de Perfil) ---
+  updateProfile(updateData: UserUpdateDto): Observable<any> {
+    return this.http.put<any>(`${this.USERS_API_URL}/me`, updateData).pipe(
+      tap(response => {
+        // Actualizar el nombre del usuario en el localStorage si el backend lo envía
+        if (response && response.nombre) {
+          localStorage.setItem(this.userNameKey, response.nombre);
+        }
+      })
+    );
   }
 }

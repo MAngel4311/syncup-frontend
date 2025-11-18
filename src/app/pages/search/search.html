@@ -2,11 +2,11 @@
   
   <h2>Busca en todo el catálogo</h2>
   <p class="search-hint">
-    Usa búsquedas simples (ej: "Luna") o avanzadas (ej: "artista:2Pac AND genero:Rap").
+    Usa búsquedas simples (ej: "Luna") o avanzadas (ej: "artista:2Pac AND anio:2008").
   </p>
 
   <mat-form-field class="search-bar" appearance="outline">
-    <mat-label>Artista, canción, género o año...</mat-label>
+    <mat-label>Artista, canción, género, año, o usuario...</mat-label>
     <input 
       type="text" 
       matInput 
@@ -28,18 +28,43 @@
 
     <div *ngIf="isLoadingSearch" class="spinner-container">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <p>Buscando en canciones y usuarios...</p>
+    </div>
+    
+    <div *ngIf="!isLoadingSearch && userSearchResults.length > 0" class="user-results-section">
+        <h3>Usuarios Encontrados</h3>
+        <mat-list class="user-list">
+            <mat-list-item *ngFor="let user of userSearchResults" class="user-result-item">
+                <mat-icon matListItemIcon>person</mat-icon>
+                
+                <div [routerLink]="['/dashboard/user', user.username]" class="user-info-text clickable-area">
+                    <div matListItemTitle class="user-name">{{ user.nombre }}</div>
+                    <div matListItemLine class="user-username">@{{ user.username }}</div>
+                </div>
+                
+                <div matListItemMeta>
+                    <button mat-button color="primary" (click)="followUser(user)">
+                        Seguir
+                    </button>
+                </div>
+            </mat-list-item>
+        </mat-list>
+        <div class="divider"></div>
+    </div>
+    
+    <div *ngIf="!isLoadingSearch && searchResults.length > 0">
+        <h3>Canciones Encontradas ({{ searchResults.length }})</h3>
+        <mat-list>
+            <mat-list-item *ngFor="let song of searchResults" class="song-result-item" (click)="playSong(song)">
+                <mat-icon matListItemIcon>music_note</mat-icon>
+                <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+                <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
+            </mat-list-item>
+        </mat-list>
     </div>
 
-    <mat-list *ngIf="!isLoadingSearch && searchResults.length > 0">
-      <mat-list-item *ngFor="let song of searchResults" class="song-result-item" (click)="playSong(song)">
-        <mat-icon matListItemIcon>music_note</mat-icon>
-        <div matListItemTitle class="song-title">{{ song.titulo }}</div>
-        <div matListItemLine class="song-artist">{{ song.artista }} - {{ song.anio }}</div>
-      </mat-list-item>
-    </mat-list>
-
-    <div *ngIf="!isLoadingSearch && searchResults.length === 0" class="no-results">
-      <p>No se encontraron resultados. Intenta con otra consulta.</p>
+    <div *ngIf="!isLoadingSearch && searchResults.length === 0 && userSearchResults.length === 0" class="no-results">
+        <p>No se encontraron canciones ni usuarios con esa búsqueda.</p>
     </div>
 
   </div>

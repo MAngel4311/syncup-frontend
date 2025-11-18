@@ -1,0 +1,79 @@
+.profile-page-container {
+    padding: 24px;
+    max-width: 800px;
+}
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    color: #b3b3b3;
+}
+
+.user-card {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.profile-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: #4CAF50;
+}
+
+.user-card mat-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.user-card mat-card-subtitle {
+    color: #b3b3b3;
+}
+
+.favorites-section {
+    padding-top: 20px !important;
+}
+
+.favorites-section h3 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.favorites-list {
+    width: 100%;
+}
+
+.song-list-item {
+    background-color: #282828;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.song-list-item:hover {
+    background-color: #333333;
+}
+
+.song-title {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.song-artist {
+    color: #b3b3b3;
+    font-size: 0.85rem;
+}
+
+.no-favorites {
+    color: #b3b3b3;
+    margin-top: 20px;
+}

@@ -105,3 +105,15 @@ h2 {
 .user-username {
   color: #b3b3bD;
 }
+.suggestions-list .mat-list-item-content {
+    /* Esto es lo que permite que el texto y el botón se separen */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info-text {
+    flex-grow: 1; /* Permite que el texto crezca y el botón se quede a la derecha */
+    min-width: 0;
+    margin-right: 16px;
+}

@@ -72,4 +72,24 @@ export class Song {
   removeFavorite(songId: number): Observable<SongDto[]> {
     return this.http.delete<SongDto[]>(`${this.USERS_API_URL}/me/favorites/${songId}`);
   }
+
+  followUser(usernameToFollow: string): Observable<string> {
+    return this.http.post(`${this.USERS_API_URL}/follow/${usernameToFollow}`, null, {
+      responseType: 'text'
+    });
+  }
+
+  searchUsers(query: string): Observable<UserDto[]> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<UserDto[]>(`${this.USERS_API_URL}/search`, { params });
+  }
+
+  // --- NUEVOS MÉTODOS PARA PERFIL PÚBLICO ---
+  getPublicProfile(username: string): Observable<UserDto> {
+    return this.http.get<UserDto>(`${this.USERS_API_URL}/profile/${username}`);
+  }
+
+  getPublicFavorites(username: string): Observable<SongDto[]> {
+    return this.http.get<SongDto[]>(`${this.USERS_API_URL}/profile/${username}/favorites`);
+  }
 }

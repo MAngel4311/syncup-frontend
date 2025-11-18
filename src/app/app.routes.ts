@@ -9,12 +9,15 @@ import { OnboardingLayout } from './onboarding/onboarding-layout/onboarding-layo
 import { Home } from './pages/home/home';
 import { SearchComponent } from './pages/search/search';
 import { LibraryComponent } from './pages/library/library';
+import { ProfileComponent } from './pages/profile/profile';
 
 import { adminAuthGuard } from './security/admin-auth.guard';
 import { AdminLayoutComponent } from './admin/admin-layout';
 import { ManageUsersComponent } from './admin/manage-users/manage-users';
 import { ManageSongsComponent } from './admin/manage-songs';
 import { AdminDashboardComponent } from './admin/admin-dashboard';
+
+import { UserProfileComponent } from './pages/user-profile/user-profile';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -35,6 +38,8 @@ export const routes: Routes = [
       { path: 'home', component: Home },
       { path: 'search', component: SearchComponent },
       { path: 'library', component: LibraryComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'user/:username', component: UserProfileComponent }, // NUEVA RUTA DINÁMICA
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

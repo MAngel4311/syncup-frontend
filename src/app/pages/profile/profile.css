@@ -1,0 +1,43 @@
+.profile-container {
+    padding: 24px;
+    max-width: 600px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.profile-card {
+    background-color: #181818;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.profile-card mat-card-content {
+    padding: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+h3 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #4CAF50;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #2e2e2e;
+    padding-bottom: 5px;
+}
+
+.password-title {
+    margin-top: 30px;
+}

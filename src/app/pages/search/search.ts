@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 
 // --- Imports de Angular Material ---
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,9 +12,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
 
 // --- Servicios que ya tenemos ---
-import { Song, SongDto } from '../../services/song';
+import { Song, SongDto, UserDto } from '../../services/song';
 import { PlayerService } from '../../services/player.service';
 
 @Component({
@@ -27,18 +29,21 @@ import { PlayerService } from '../../services/player.service';
     MatAutocompleteModule,
     MatListModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    RouterLink // AÑADIDA AQUÍ
   ],
   templateUrl: './search.html',
   styleUrl: './search.css'
 })
 export class SearchComponent implements OnInit {
 
-  // --- Propiedades para Búsqueda (RF-004) ---
+  // --- Resultados de Búsqueda ---
   searchResults: SongDto[] = [];
+  userSearchResults: UserDto[] = [];
   isLoadingSearch = false;
   
-  // --- Propiedades para Autocompletado (RF-003) ---
+  // --- Autocompletado ---
   searchControl = new FormControl('');
   autocompleteResults$!: Observable<string[]>;
 
@@ -48,15 +53,13 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Lógica de Autocompletado (RF-003)
-    // Se activa 300ms después de que el usuario deja de teclear
     this.autocompleteResults$ = this.searchControl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(prefix => {
         if (!prefix || prefix.length < 2) {
-          return []; // No buscar si es muy corto
+          return [];
         }
         return this.songService.autocomplete(prefix);
       })
@@ -64,26 +67,31 @@ export class SearchComponent implements OnInit {
   }
 
   /**
-   * Ejecuta la búsqueda avanzada (RF-004) al presionar Enter.
-   * Usa el endpoint de búsqueda concurrente del backend.
+   * Ejecuta la búsqueda de Canciones y Usuarios en paralelo.
    */
   onSearchSubmit(): void {
     const query = this.searchControl.value;
     if (!query) {
       this.searchResults = [];
+      this.userSearchResults = [];
       return;
     }
 
     this.isLoadingSearch = true;
     this.searchResults = [];
+    this.userSearchResults = [];
 
-    this.songService.search(query).subscribe({
-      next: (results) => {
-        this.searchResults = results;
+    forkJoin({
+      songs: this.songService.search(query),
+      users: this.songService.searchUsers(query)
+    }).subscribe({
+      next: ({ songs, users }) => {
+        this.searchResults = songs;
+        this.userSearchResults = users.filter(u => u.rol !== 'ADMIN');
         this.isLoadingSearch = false;
       },
       error: (err) => {
-        console.error('Error en la búsqueda avanzada:', err);
+        console.error('Error en la búsqueda:', err);
         this.isLoadingSearch = false;
       }
     });
@@ -94,5 +102,19 @@ export class SearchComponent implements OnInit {
    */
   playSong(song: SongDto): void {
     this.playerService.playSong(song);
+  }
+  
+  /**
+   * Conecta con el endpoint de seguimiento (RF-007)
+   */
+  followUser(user: UserDto): void {
+    this.songService.followUser(user.username).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.userSearchResults = this.userSearchResults.filter(u => u.username !== user.username);
+        alert(`¡Ahora sigues a ${user.nombre}!`);
+      },
+      error: (err) => console.error('Error al seguir usuario:', err)
+    });
   }
 }

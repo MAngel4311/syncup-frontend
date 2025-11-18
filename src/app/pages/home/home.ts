@@ -31,6 +31,7 @@ export class Home implements OnInit {
   discoverWeekly: SongDto[] = [];
   userSuggestions: UserDto[] = [];
   favoriteSongIds = new Set<number>();
+  followingUsernames = new Set<string>(); // NUEVO: Para saber a quién seguimos
 
   constructor(
     private songService: Song,
@@ -39,16 +40,21 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.loadFavorites();
+    this.loadSuggestions();
     
     this.songService.getDiscoverWeekly().subscribe({
       next: (songs: SongDto[]) => this.discoverWeekly = songs,
       error: (err: any) => console.error('Error al cargar discover weekly:', err)
     });
+  }
 
+  loadSuggestions(): void {
     this.songService.getUserSuggestions().subscribe({
       next: (users: UserDto[]) => this.userSuggestions = users,
       error: (err: any) => console.error('Error al cargar sugerencias de usuarios:', err)
     });
+    // Nota: Aquí se debería cargar también la lista de 'seguidos' para filtrar/actualizar
+    // Pero por simplicidad, lo haremos asumiendo que las sugerencias no incluyen seguidos
   }
 
   loadFavorites(): void {
@@ -100,5 +106,18 @@ export class Home implements OnInit {
   private updateFavoritesSet(favorites: SongDto[]): void {
     this.favoriteSongIds.clear();
     favorites.forEach(song => this.favoriteSongIds.add(song.id));
+  }
+
+  // Gestión de Seguidores
+  followUser(user: UserDto): void {
+    this.songService.followUser(user.username).subscribe({
+      next: (response) => {
+        console.log(response);
+        // Quitar al usuario de la lista de sugerencias después de seguirlo
+        this.userSuggestions = this.userSuggestions.filter(u => u.username !== user.username);
+        // Opcional: Mostrar notificación de éxito
+      },
+      error: (err) => console.error('Error al seguir usuario:', err)
+    });
   }
 }

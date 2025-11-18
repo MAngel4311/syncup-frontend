@@ -31,8 +31,15 @@
       <div matListItemAvatar class="user-avatar">
         <span>{{ getUserInitials(user) }}</span>
       </div>
-      <div matListItemTitle class="user-name">{{ user.nombre }}</div>
-      <div matListItemLine class="user-username">{{ user.username }}</div>
+      <div class="user-info-text">
+        <div matListItemTitle class="user-name">{{ user.nombre }}</div>
+        <div matListItemLine class="user-username">{{ user.username }}</div>
+      </div>
+      <div matListItemMeta class="user-actions">
+        <button mat-button color="primary" (click)="followUser(user)">
+          Seguir
+        </button>
+      </div>
     </mat-list-item>
   </mat-list>
 

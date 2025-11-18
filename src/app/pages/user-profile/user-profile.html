@@ -1,0 +1,31 @@
+<div class="profile-page-container">
+    
+    <div *ngIf="isLoading" class="spinner-container">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        <p>Cargando perfil de {{ usernameParam }}...</p>
+    </div>
+
+    <mat-card *ngIf="userProfile && !isLoading" class="user-card">
+        <mat-card-header>
+            <mat-icon matListItemIcon class="profile-icon">person</mat-icon>
+            <mat-card-title>{{ userProfile.nombre }}</mat-card-title>
+            <mat-card-subtitle>@{{ userProfile.username }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content class="favorites-section">
+            <h3>Canciones Favoritas ({{ favoriteSongs.length }})</h3>
+
+            <mat-list *ngIf="favoriteSongs.length > 0" class="favorites-list">
+                <mat-list-item *ngFor="let song of favoriteSongs" class="song-list-item" (click)="playSong(song)">
+                    <mat-icon matListItemIcon>music_note</mat-icon>
+                    <div matListItemTitle class="song-title">{{ song.titulo }}</div>
+                    <div matListItemLine class="song-artist">{{ song.artista }}</div>
+                </mat-list-item>
+            </mat-list>
+
+            <div *ngIf="favoriteSongs.length === 0" class="no-favorites">
+                <p>{{ userProfile.nombre }} aún no ha añadido canciones favoritas.</p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

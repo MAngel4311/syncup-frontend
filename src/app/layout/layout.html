@@ -21,6 +21,11 @@
           <mat-icon matListItemIcon>library_music</mat-icon>
           <span matListItemTitle>Tu Biblioteca</span>
         </a>
+        
+        <a mat-list-item routerLink="/dashboard/profile" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>account_circle</mat-icon>
+          <span matListItemTitle>Mi Perfil</span>
+        </a>
 
         <a mat-list-item routerLink="/admin" routerLinkActive="active-link" *ngIf="isAdmin">
           <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
