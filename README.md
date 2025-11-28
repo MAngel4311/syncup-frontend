@@ -37,8 +37,6 @@ Mi contribución se centró en la usabilidad y la seguridad del lado del cliente
 
 ## ⚙️ Instrucciones para Ejecutar (Setup)
 
-*(Mantén las instrucciones de ejecución del `ng serve` que ya tenías, ya que son cruciales para un Dev Server)*
-
 1.  Asegúrate de tener **Node.js** y **Angular CLI** instalados.
 2.  Clonar el repositorio.
 3.  Instalar dependencias: `npm install`
