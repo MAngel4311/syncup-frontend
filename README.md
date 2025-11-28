@@ -11,8 +11,11 @@
 Mi contribución se centró en la usabilidad y la seguridad del lado del cliente, permitiendo el despliegue de las funciones complejas del Backend:
 
 **Experiencia de Usuario (UX):** Implementación del **flujo de Onboarding** para nuevos usuarios, resolviendo el problema del "Arranque en Frío" (Cold Start) al alimentar los grafos de recomendación desde el primer acceso.
-* **Seguridad Cliente-Servidor:** Implementación de **Auth Interceptors** en Angular para inyectar automáticamente el **Token JWT** en todas las peticiones salientes.
+
+**Seguridad Cliente-Servidor:** Implementación de **Auth Interceptors** en Angular para inyectar automáticamente el **Token JWT** en todas las peticiones salientes.
+
 **Protección de Rutas:** Desarrollo de **`AuthGuards`** (`auth.guard.ts` y `admin-auth.guard.ts`) para proteger rutas privadas y restringir el acceso del Administrador, decodificando el rol desde el token.
+  
 **Reproducción Continua:** Uso del patrón **Singleton** (`player.service.ts`) para mantener la canción reproduciéndose sin interrupción al navegar entre diferentes rutas de la aplicación.
 
 ## 🛠️ Stack Tecnológico
