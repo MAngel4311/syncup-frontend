@@ -1,6 +1,6 @@
 # 🚀 SyncUp-Frontend | Interfaz de Usuario para Streaming Musical (Angular)
 
- Finalizado (Proyecto Académico - 2025)
+ Finalizado (Proyecto Académico - 2025) con opcion de escalabilidad 
 
 **Módulo Cliente (SPA)** desarrollado en **Angular**. El objetivo fue construir una interfaz fluida, segura y reactiva que tradujera la complejidad de los **algoritmos de recomendación** en una experiencia de usuario intuitiva.
 
