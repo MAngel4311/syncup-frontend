@@ -1,59 +1,53 @@
-# SyncupClient
+# 🚀 SyncUp-Frontend | Interfaz de Usuario para Streaming Musical (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+ Finalizado (Proyecto Académico - 2025)
 
-## Development server
+**Módulo Cliente (SPA)** desarrollado en **Angular**. El objetivo fue construir una interfaz fluida, segura y reactiva que tradujera la complejidad de los **algoritmos de recomendación** en una experiencia de usuario intuitiva.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🎯 Enfoque y Logros Clave (FRONTEND)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Mi contribución se centró en la usabilidad y la seguridad del lado del cliente, permitiendo el despliegue de las funciones complejas del Backend:
 
-## Code scaffolding
+**Experiencia de Usuario (UX):** Implementación del **flujo de Onboarding** para nuevos usuarios, resolviendo el problema del "Arranque en Frío" (Cold Start) al alimentar los grafos de recomendación desde el primer acceso.
+* **Seguridad Cliente-Servidor:** Implementación de **Auth Interceptors** en Angular para inyectar automáticamente el **Token JWT** en todas las peticiones salientes.
+**Protección de Rutas:** Desarrollo de **`AuthGuards`** (`auth.guard.ts` y `admin-auth.guard.ts`) para proteger rutas privadas y restringir el acceso del Administrador, decodificando el rol desde el token.
+**Reproducción Continua:** Uso del patrón **Singleton** (`player.service.ts`) para mantener la canción reproduciéndose sin interrupción al navegar entre diferentes rutas de la aplicación.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠️ Stack Tecnológico
 
-```bash
-ng generate component component-name
-```
+### Frontend & Interfaz
+- **Framework:** **Angular** 
+- **Lenguaje:** **TypeScript** 
+- **Arquitectura:** SPA (Single Page Application)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Backend (Módulo Integrado)
+- **Framework:** **Spring Boot 3.5.6**.
+- **Lenguaje:** **Java 21**.
+- **Datos Clave:** Implementación de **Grafos** y **Árboles Trie** para búsquedas instantáneas y **algoritmos de recomendación** (Dijkstra y BFS).
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## ✨ Módulos de Interfaz Desarrollados (Contribución Específica)
 
-To build the project run:
+**Registro por Pasos (`registro-wizard.ts`):** Orquestación del proceso de registro guiado para mejorar la experiencia de usuario.
+**Búsqueda en Tiempo Real:** Interfaz reactiva (`search.ts`) que consume el servicio del **Trie** para el **autocompletado instantáneo** de canciones.
+**Gestión de Perfil:** Desarrollo de la interfaz para la interacción social (**Seguir/Dejar de seguir**), validando la relación actual con el **Grafo Social** del Backend.
 
-```bash
-ng build
-```
+## ⚙️ Instrucciones para Ejecutar (Setup)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+*(Mantén las instrucciones de ejecución del `ng serve` que ya tenías, ya que son cruciales para un Dev Server)*
 
-## Running unit tests
+1.  Asegúrate de tener **Node.js** y **Angular CLI** instalados.
+2.  Clonar el repositorio.
+3.  Instalar dependencias: `npm install`
+4.  Ejecutar el servidor localmente: `ng serve`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## 🔗 Colaboración y Repositorios Relacionados
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* **Autores/Colaboradores:** @MAngel4311, @DanielCifuentes1997
+* **Módulo Backend (JAVA/Springboot):** https://github.com/MAngel4311/syncup-frontend
+* **Informe Técnico Completo:** Documentación técnica disponible a solicitud.
