@@ -49,5 +49,4 @@ Mi contribución se centró en la usabilidad y la seguridad del lado del cliente
 ## 🔗 Colaboración y Repositorios Relacionados
 
 * **Autores/Colaboradores:** @MAngel4311, @DanielCifuentes1997
-* **Módulo Backend (JAVA/Springboot):** https://github.com/MAngel4311/syncup-frontend
 * **Informe Técnico Completo:** Documentación técnica disponible a solicitud.
